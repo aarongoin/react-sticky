@@ -1,12 +1,15 @@
 var React = require('react'),
-		Sticky = React.createClass({
+    Sticky = React.createClass({displayName: "Sticky",
 
   reset: function() {
     var html = document.documentElement,
         body = document.body,
-        windowOffset = window.pageYOffset || (html.clientHeight ? html : body).scrollTop;
+        windowOffset = window.pageYOffset || (html.clientHeight ? html : body).scrollTop,
+        el = this.getDOMNode();
     
-    this.elementOffset = this.getDOMNode().getBoundingClientRect().top + windowOffset;
+    this.elementOffset = el.getBoundingClientRect().top + windowOffset;
+    this.phantomHeight = el.offsetHeight;
+    this.handleScroll();
   },
 
   handleResize: function() {
@@ -48,9 +51,18 @@ var React = require('react'),
   },
 
   render: function() {
-    return React.DOM.div({
-      style: this.state.style
-    }, this.props.children);
+    if (this.state.style.position) return (
+      React.createElement("div", {style: {height: this.phantomHeight}}, 
+        React.createElement("div", {style: this.state.style}, 
+          this.props.children
+        )
+      )
+    );
+    else return (
+      React.createElement("div", {style: this.state.style}, 
+        this.props.children
+      ) 
+    );
   }
 });
 
