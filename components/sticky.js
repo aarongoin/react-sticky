@@ -24,6 +24,7 @@ var React = require('react'),
 
   getDefaultProps: function() {
     return {
+      jank: false,
       stickyStyle: {
         position: 'fixed',
         top: 0,
@@ -52,7 +53,7 @@ var React = require('react'),
 
   render: function() {
     if (this.state.style.position) return (
-      React.createElement("div", {style: {height: this.phantomHeight}}, 
+      React.createElement("div", {style: {height: this.props.jank ? 'auto' : this.phantomHeight}}, 
         React.createElement("div", {style: this.state.style}, 
           this.props.children
         )

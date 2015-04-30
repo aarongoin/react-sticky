@@ -42,6 +42,8 @@ When the "stickiness" becomes activated, the following css style rules are appli
 
 ### Options
 
+The sticky component has an optional boolean prop 'jank'. This defaults to false, and a phantom node is created in place of your component (in it's original place in the document flow) to eliminate document repositioning when stickyness is activated.
+
 In the event that you wish to override the style rules applied, simply pass in the style object as a prop:
 
 app.jsx
